@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block title %} Pengaturan - FINTRACK {% endblock %} {% block page_title %} Pengaturan {% endblock %} {% block page_description %} Kelola akun dan pengaturan aplikasi FINTRACK. {% endblock %} {% block css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pengaturan.css') }}" />
+
+{% endblock %} {% block content %}
+
+<div class="pengaturan-page">
+  <!-- ================================================= -->
+  <!-- AKUN -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-user"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Akun</h3>
+
+      <p>Kelola informasi dan profil akun FINTRACK.</p>
+
+      <a href="{{ url_for('profil') }}" class="btn-primary">
+        <i class="fa-solid fa-user"></i>
+        Lihat Profil
+      </a>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- KEAMANAN -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-shield-halved"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Keamanan</h3>
+
+      <p>Kelola keamanan akun dan ubah password Anda.</p>
+
+      <a href="{{ url_for('ganti_password') }}" class="btn-primary">
+        <i class="fa-solid fa-key"></i>
+        Ganti Password
+      </a>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- INFORMASI APLIKASI -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-circle-info"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Tentang FINTRACK</h3>
+
+      <p>FINTRACK adalah aplikasi pencatatan keuangan berbasis Flask dan SQLite.</p>
+
+      <p class="app-version">Versi 1.0</p>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- LOGOUT -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Keluar</h3>
+
+      <p>Keluar dari akun FINTRACK dengan aman.</p>
+
+      <a href="{{ url_for('logout') }}" class="btn-logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Logout
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

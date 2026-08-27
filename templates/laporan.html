@@ -1,0 +1,270 @@
+{% extends "layout.html" %} {% block title %} Laporan | FINTRACK {% endblock %} {% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/laporan.css') }}" />
+{% endblock %} {% block page_title %} Laporan Keuangan {% endblock %} {% block page_description %} Analisis pemasukan dan pengeluaran. {% endblock %} {% block content %}
+
+<div class="laporan-filter-card">
+  <div class="section-title">
+  <!-- FILTER -->
+  <section class="filter-card">
+    <i class="fa-solid fa-filter"></i>
+    <h2>Filter Laporan</h2>
+
+  </div>
+    <form class="filter-form" method="GET">
+      <div class="filter-row">
+
+        <input type="date"
+               name="tanggal_awal"
+               value="{{ tanggal_awal }}">
+    
+        <input type="date"
+               name="tanggal_akhir"
+               value="{{ tanggal_akhir }}">
+    
+    </div>
+    
+    <div class="filter-row">
+    
+        <select name="kategori">
+          <option value="">
+    
+            Semua Kategori
+          </option>
+          
+          {% for item in daftar_kategori %}
+    
+          <option
+          value="{{ item.kategori }}"
+          {% if kategori == item.kategori %}
+          selected
+          {% endif %}>
+    
+             {{ item.kategori }}
+    
+          </option>
+    
+          {% endfor %}
+        </select>
+    
+        <select name="tipe">
+          <option value="">   
+            Semua Tipe  
+        </option>
+    
+        <option
+        value="Pemasukan"
+        {% if tipe=="Pemasukan" %}
+        selected
+        {% endif %}>    
+            Pemasukan   
+        </option>
+    
+        <option
+        value="Pengeluaran"
+        {% if tipe=="Pengeluaran" %}
+        selected
+        {% endif %}> 
+            Pengeluaran    
+        </option>
+      </select>    
+    </div>    
+    <div class="filter-button">    
+        <button type="submit" class="btn-primary">
+            <i class="fa-solid fa-filter"></i>
+            Filter
+        </button>
+    
+        <a href="/laporan" class="btn-secondary">
+            Reset
+        </a>
+    </div>   
+    </form>
+  </section>
+
+
+  <!-- SUMMARY -->
+
+  <section class="laporan-summary">
+    <div class="summary-card income">
+        <i class="fa-solid fa-arrow-trend-up"></i>
+        <div>
+            <small>Total Pemasukan</small>
+            <h2>{{ pemasukan | rupiah }}</h2>
+        </div>
+    </div>
+
+    <div class="summary-card expense">
+        <i class="fa-solid fa-arrow-trend-down"></i>
+        <div>
+            <small>Total Pengeluaran</small>
+            <h2>{{ pengeluaran | rupiah }}</h2>
+        </div>
+    </div>
+
+    <div class="summary-card balance">
+        <i class="fa-solid fa-wallet"></i>
+        <div>
+            <small>Saldo</small>
+            <h2>{{ saldo | rupiah }}</h2>
+        </div>
+    </div>
+
+    <div class="summary-card transaction">
+        <i class="fa-solid fa-receipt"></i>
+        <div>
+            <small>Total Transaksi</small>
+            <h2>{{ jumlah_transaksi }}</h2>
+        </div>
+    </div>
+
+</section>
+  <!-- CHART -->
+  <section class="chart-grid">
+    <!-- ================================================= -->
+    <!-- GRAFIK -->
+    <!-- ================================================= -->
+
+    <div class="laporan-chart-grid">
+
+      <!-- Grafik Bulanan -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3>
+            <i class="fa-solid fa-chart-column"></i>
+              Grafik Bulanan
+            </h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="laporanChart"></canvas>
+          </div>
+        </div>
+        
+        <!-- Grafik Kategori -->
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>
+              <i class="fa-solid fa-chart-pie"></i>
+               Grafik Kategori
+              </h3>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="kategoriChart"></canvas>
+            </div>
+          </div>
+        </div>
+       </section>
+
+  <!-- TABLE -->
+
+  <div class="export-buttons">
+
+    <a href="/export" class="btn-export-excel">
+      <i class="fa-solid fa-file-excel"></i>
+      Export Excel
+    </a>
+  
+    <a href="#" class="btn-export-pdf">
+      <i class="fa-solid fa-file-pdf"></i>
+      Export PDF
+    </a>
+  
+  </div>
+
+  <section class="dashboard-card">
+    <div class="table-card">
+      <div class="table-header">
+          <h3>
+              <i class="fa-solid fa-table"></i>
+              Data Laporan
+          </h3>
+      </div> 
+      <div class="table-responsive">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Kategori</th>
+            <th>Tipe</th>
+            <th>Nominal</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if data %} {% for row in data %}
+          <tr>
+            <td>{{ row.tanggal | tanggal_indo }}</td>
+            <td>{{ row.keterangan }}</td>
+            <td>{{ row.kategori }}</td>
+            <td>{{ row.tipe }}</td>
+            <td>{{ row.nominal | rupiah }}</td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="5">Belum ada data</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+
+      <!-- ================================================= -->
+      <!-- PAGINATION -->
+      <!-- ================================================= -->
+      <div class="pagination">
+
+        {% if page > 1 %}
+      
+        <a href="?page={{ page - 1 }}&tanggal_awal={{ tanggal_awal }}&tanggal_akhir={{ tanggal_akhir }}&kategori={{ kategori }}&tipe={{ tipe }}">
+          « Prev
+        </a>
+      
+        {% endif %}
+      
+      
+        {% for i in range(1, total_page + 1) %}
+      
+        <a
+          href="?page={{ i }}&tanggal_awal={{ tanggal_awal }}&tanggal_akhir={{ tanggal_akhir }}&kategori={{ kategori }}&tipe={{ tipe }}"
+          class="{% if i == page %}active-page{% endif %}">
+      
+          {{ i }}
+      
+        </a>
+      
+        {% endfor %}
+      
+      
+        {% if page < total_page %}
+      
+        <a href="?page={{ page + 1 }}&tanggal_awal={{ tanggal_awal }}&tanggal_akhir={{ tanggal_akhir }}&kategori={{ kategori }}&tipe={{ tipe }}">
+          Next »
+        </a>
+      
+        {% endif %}
+      
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+
+    const bulanChart={{ bulan_chart|tojson }};
+    
+    const pemasukanChart={{ pemasukan_chart|tojson }};
+    
+    const pengeluaranChart={{ pengeluaran_chart|tojson }};
+    
+    const kategoriChart={{ kategori_chart|tojson }};
+    
+    const nominalChart={{ nominal_chart|tojson }};
+    
+    </script>
+    
+{% endblock %} {% block javascript %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/laporan.js') }}"></script>
+
+{% endblock %}

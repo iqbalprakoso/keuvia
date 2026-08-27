@@ -1,0 +1,198 @@
+{% extends "layout.html" %} {% block title %} Target Tabungan | FINTRACK {% endblock %} {% block css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/target.css') }}" />
+
+{% endblock %} {% block page_title %} Target Tabungan {% endblock %} {% block page_description %} Kelola target tabungan Anda. {% endblock %} {% block content %}
+
+<div class="target-page">
+  <div class="target-header">
+    <button type="button" id="btnTambahTarget" class="btn-add-target">
+      <i class="fa-solid fa-plus"></i>
+      Tambah Target
+    </button>
+  </div>
+
+  <!-- ==========================================
+  STATISTIK TARGET
+  ========================================== -->
+
+  <div class="target-summary">
+    <div class="summary-card">
+      <span>Total Target</span>
+
+      <h2>{{ total_target }}</h2>
+    </div>
+
+    <div class="summary-card">
+      <span>Total Nominal</span>
+
+      <h2>{{ total_nominal|rupiah }}</h2>
+    </div>
+
+    <div class="summary-card">
+      <span>Sudah Terkumpul</span>
+
+      <h2>{{ total_terkumpul|rupiah }}</h2>
+    </div>
+
+    <div class="summary-card">
+      <span>Total Sisa</span>
+
+      <h2>{{ total_sisa|rupiah }}</h2>
+    </div>
+  </div>
+
+  {% if targets %}
+
+  <div class="target-grid">
+    {% for target in targets %}
+
+    <div class="target-card">
+      <div class="target-top">
+        <div class="target-card-header">
+          <h3>{{ target.nama_target }}</h3>
+
+          <span>Target Tabungan</span>
+
+          <h2>{{ target.nominal_target | rupiah }}</h2>
+        </div>
+
+        <!-- <div class="progress-badge">{{ target.progress }}%</div> -->
+      </div>
+
+      <div class="progress-header">
+        <span>Progress</span>
+
+        <strong>{{ target.progress }}%</strong>
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" style="width: {{ target.progress }}%"></div>
+      </div>
+
+      <div class="target-detail">
+        <div class="detail-row">
+          <div class="detail-icon">💰</div>
+
+          <div>
+            <small>Sudah Terkumpul</small>
+
+            <strong>{{ target.terkumpul | rupiah }}</strong>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-icon">🎯</div>
+
+          <div>
+            <small>Sisa</small>
+
+            <strong>{{ target.sisa | rupiah }}</strong>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <div class="detail-icon">📅</div>
+
+          <div>
+            <small>Deadline</small>
+
+            <strong>{{ target.tanggal_target }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="target-action">
+        <button class="btn-edit btn-edit-target" data-id="{{ target.id }}" data-nama="{{ target.nama_target }}" data-target="{{ target.nominal_target }}" data-terkumpul="{{ target.terkumpul }}" data-tanggal="{{ target.tanggal_target }}">
+          <i class="fa-solid fa-pen"></i>
+          Edit
+        </button>
+
+        <button class="btn-delete btn-delete-target" data-id="{{ target.id }}">
+          <i class="fa-solid fa-trash"></i>
+          Hapus
+        </button>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+  {% else %}
+
+  <div class="empty-target">
+    <i class="fa-solid fa-piggy-bank"></i>
+
+    <h2>Belum Ada Target</h2>
+
+    <p>Buat target tabungan pertama Anda.</p>
+  </div>
+
+  {% endif %}
+</div>
+
+<!-- ================================================= -->
+<!-- MODAL TAMBAH TARGET -->
+<!-- ================================================= -->
+
+<div class="modal" id="modalTarget">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>🎯 Tambah Target Tabungan</h2>
+
+      <span class="close-modal"> &times; </span>
+    </div>
+
+    <form id="targetForm" action="/target" method="POST">
+      <input type="hidden" name="id" id="target_id" />
+
+      <div class="form-group">
+        <label> Nama Target </label>
+
+        <input id="nama_target" type="text" name="nama_target" required />
+      </div>
+
+      <div class="form-group">
+        <label> Nominal Target </label>
+
+        <input id="nominal_target" type="number" name="nominal_target" required />
+      </div>
+
+      <div class="form-group">
+        <label> Sudah Terkumpul </label>
+
+        <input type="number" id="terkumpul" name="terkumpul" />
+      </div>
+
+      <div class="form-group">
+        <label> Deadline </label>
+
+        <input id="tanggal_target" type="date" name="tanggal_target" required />
+      </div>
+
+      <button class="btn-save">Simpan Target</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- MODAL HAPUS -->
+<!-- ================================================ -->
+
+<div class="modal" id="deleteModal">
+  <div class="modal-content delete-content">
+    <h2>Hapus Target?</h2>
+
+    <p>Target tabungan yang dihapus tidak bisa dikembalikan.</p>
+
+    <div class="delete-action">
+      <button class="btn-cancel" id="cancelDelete">Batal</button>
+
+      <form action="/target/hapus" method="POST">
+        <input type="hidden" name="id" id="delete_target_id" />
+        <button class="btn-danger">Ya, Hapus</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/target.js') }}"></script>
+{% endblock %}

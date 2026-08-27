@@ -1,0 +1,330 @@
+{% extends "layout.html" %}
+
+<!-- ================================================= -->
+<!-- TITLE BROWSER -->
+<!-- ================================================= -->
+
+{% block title %} Dashboard | FINTRACK {% endblock %}
+
+<!-- ================================================= -->
+<!-- CSS KHUSUS DASHBOARD -->
+<!-- ================================================= -->
+
+{% block css %}
+
+<!--
+Jika nanti dashboard memiliki CSS khusus,
+tambahkan link CSS di sini.
+Contoh:
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/dashboard.css') }}">
+-->
+
+{% endblock %}
+
+<!-- ================================================= -->
+<!-- JUDUL HALAMAN -->
+<!-- ================================================= -->
+
+{% block page_title %} Dashboard {% endblock %}
+
+<!-- ================================================= -->
+<!-- DESKRIPSI HALAMAN -->
+<!-- ================================================= -->
+
+{% block page_description %} Ringkasan kondisi keuangan Anda hari ini. {% endblock %}
+
+<!-- ================================================= -->
+<!-- ISI DASHBOARD -->
+<!-- Semua isi dashboard dimulai dari sini -->
+<!-- ================================================= -->
+
+{% block content %}
+
+<!-- ================================================= -->
+<!-- KARTU STATISTIK -->
+<!-- Ringkasan kondisi keuangan -->
+<!-- ================================================= -->
+
+<section class="stats-grid">
+  <!-- ============================================= -->
+  <!-- TOTAL PEMASUKAN -->
+  <!-- ============================================= -->
+
+  <div class="stat-card income-card">
+    <div class="stat-icon">
+      <i class="fa-solid fa-arrow-trend-up"></i>
+    </div>
+
+    <div class="stat-info">
+      <span>Total Pemasukan</span>
+
+      <h2>{{ pemasukan | rupiah }}</h2>
+
+      <small>Pemasukan keseluruhan</small>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- TOTAL PENGELUARAN -->
+  <!-- ============================================= -->
+
+  <div class="stat-card expense-card">
+    <div class="stat-icon">
+      <i class="fa-solid fa-arrow-trend-down"></i>
+    </div>
+
+    <div class="stat-info">
+      <span>Total Pengeluaran</span>
+
+      <h2>{{ pengeluaran | rupiah }}</h2>
+
+      <small>Pengeluaran keseluruhan</small>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SALDO -->
+  <!-- ============================================= -->
+
+  <div class="stat-card balance-card">
+    <div class="stat-icon">
+      <i class="fa-solid fa-wallet"></i>
+    </div>
+
+    <div class="stat-info">
+      <span>Saldo Saat Ini</span>
+
+      <h2>{{ saldo | rupiah }}</h2>
+
+      <small>Sisa saldo</small>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- TRANSAKSI BULAN INI -->
+  <!-- ============================================= -->
+
+  <div class="stat-card transaction-card">
+    <div class="stat-icon">
+      <i class="fa-solid fa-receipt"></i>
+    </div>
+
+    <div class="stat-info">
+      <span>Transaksi Bulan Ini</span>
+
+      <h2>{{ jumlah_transaksi_bulan_ini }}</h2>
+
+      <small>Total transaksi</small>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ROW DASHBOARD -->
+<!-- Target Tabungan & Grafik Bulanan -->
+<!-- ================================================= -->
+
+<section class="dashboard-row">
+  <!-- ============================================= -->
+  <!-- TARGET TABUNGAN -->
+  <!-- ============================================= -->
+
+  <div class="dashboard-card target-card">
+    <div class="card-header">
+      <h3>
+        <i class="fa-solid fa-bullseye"></i>
+        Target Tabungan
+      </h3>
+      <a href="/target" class="btn-detail"> Lihat Detail </a>
+    </div>
+    {% if target %}
+    <div class="target-body">
+      <h2>{{ target.nama_target }}</h2>
+      <p>
+        Target :
+        <strong>{{ target.nominal_target | rupiah }}</strong>
+      </p>
+      <!-- Progress -->
+      <div class="progress-wrapper">
+        <div class="progress">
+          <div class="progress-bar" style="width: {{ progress_target }}%;"></div>
+        </div>
+
+        <span> {{ progress_target }}% </span>
+      </div>
+      <!-- Informasi -->
+      <div class="target-info">
+        <div class="info-card">
+          <small> Saldo </small>
+
+          <strong> {{ saldo | rupiah }} </strong>
+        </div>
+        <div class="info-card">
+          <small> Sisa </small>
+
+          <strong> {{ sisa_target | rupiah }} </strong>
+        </div>
+        <div class="info-card">
+          <small> Deadline </small>
+
+          <strong> {{ target.tanggal_target }} </strong>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <!-- Jika belum punya target -->
+    <div class="empty-target">
+      <i class="fa-solid fa-piggy-bank"></i>
+      <h3>Belum Ada Target</h3>
+      <p>Buat target tabungan pertamamu.</p>
+
+      <a href="/target" class="btn-create"> Buat Target </a>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ============================================= -->
+  <!-- GRAFIK BULANAN -->
+  <!-- ============================================= -->
+
+  <div class="dashboard-card chart-card">
+    <div class="card-header">
+      <h3>
+        <i class="fa-solid fa-chart-column"></i>
+        Grafik Bulanan
+      </h3>
+
+      <div class="chart-filter">
+        <select>
+          <option>Tahun Ini</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Chart -->
+
+    <div class="chart-wrapper">
+      <canvas id="incomeExpenseChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ROW KEDUA DASHBOARD -->
+<!-- Transaksi Terbaru & Donut Chart -->
+<!-- ================================================= -->
+
+<section class="dashboard-row">
+  <!-- ============================================= -->
+  <!-- TRANSAKSI TERBARU -->
+  <!-- ============================================= -->
+
+  <div class="dashboard-card">
+    <div class="card-header">
+      <h3>
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        Transaksi Terbaru
+      </h3>
+      <a href="/transaksi" class="btn-detail"> Lihat Semua </a>
+    </div>
+    <div class="table-responsive">
+      <table class="modern-table">
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Kategori</th>
+            <th>Tipe</th>
+            <th>Nominal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data %}
+          <tr>
+            <td>{{ row.tanggal | tanggal_indo }}</td>
+
+            <td>{{ row.keterangan }}</td>
+
+            <td>
+              <span class="badge"> {{ row.kategori }} </span>
+            </td>
+
+            <td>
+              {% if row.tipe == "Pemasukan" %}
+
+              <span class="income-text">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+                Pemasukan
+              </span>
+
+              {% else %}
+
+              <span class="expense-text">
+                <i class="fa-solid fa-arrow-trend-down"></i>
+
+                Pengeluaran
+              </span>
+
+              {% endif %}
+            </td>
+
+            <td>
+              <strong> {{ row.nominal | rupiah }} </strong>
+            </td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- DONUT CHART -->
+  <!-- ============================================= -->
+
+  <div class="dashboard-card donut-card">
+    <div class="card-header">
+      <h3>
+        <i class="fa-solid fa-chart-pie"></i>
+
+        Pengeluaran Berdasarkan Kategori
+      </h3>
+    </div>
+
+    <div class="donut-wrapper">
+      <canvas id="kategoriChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT KHUSUS DASHBOARD -->
+<!-- ================================================= -->
+
+{% block javascript %} {% endblock %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ================================================= -->
+<!-- DATA DARI FLASK -->
+<!-- Dikirim ke dashboard.js -->
+<!-- ================================================= -->
+
+<script>
+
+  const bulanChart = {{ bulan_chart | tojson }};
+  const pemasukanChart = {{ pemasukan_chart | tojson }};
+  const pengeluaranChart = {{ pengeluaran_chart | tojson }};
+  const kategori = {{ kategori | tojson }};
+  const nominal = {{ nominal | tojson }};
+</script>
+
+<!-- Dashboard Javascript -->
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+{% endblock %}

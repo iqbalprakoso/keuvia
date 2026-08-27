@@ -1,0 +1,475 @@
+{% extends "layout.html" %}
+
+<!-- ================================================= -->
+<!-- TITLE -->
+<!-- ================================================= -->
+
+{% block title %} Transaksi | FINTRACK {% endblock %}
+
+<!-- ================================================= -->
+<!-- CSS KHUSUS HALAMAN -->
+<!-- ================================================= -->
+
+{% block css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/transaksi.css') }}" />
+
+{% endblock %}
+
+<!-- ================================================= -->
+<!-- PAGE TITLE -->
+<!-- ================================================= -->
+
+{% block page_title %} Manajemen Transaksi {% endblock %}
+
+<!-- ================================================= -->
+<!-- PAGE DESCRIPTION -->
+<!-- ================================================= -->
+
+{% block page_description %} Kelola seluruh transaksi keuangan Anda. {% endblock %}
+
+<!-- ================================================= -->
+<!-- CONTENT -->
+<!-- ================================================= -->
+
+{% block content %}
+
+<section class="transaction-header">
+  <a href="#" class="btn-primary">
+    <i class="fa-solid fa-plus"></i>
+    Tambah Transaksi
+  </a>
+</section>
+
+<!-- ================================================= -->
+<!-- FILTER -->
+<!-- ================================================= -->
+
+<section class="filter-card">
+
+  <form class="filter-form" method="GET" action="/transaksi">
+  
+      <!-- Search -->
+  
+      <input
+          type="text"
+          name="keyword"
+          class="search-box"
+          placeholder="Cari transaksi..."
+          value="{{ keyword }}">
+  
+      <!-- Tipe -->
+  
+      <select name="tipe">
+  
+          <option value="">Semua Tipe</option>
+  
+          <option value="Pemasukan"
+          {% if tipe=="Pemasukan" %}selected{% endif %}>
+              Pemasukan
+          </option>
+  
+          <option value="Pengeluaran"
+          {% if tipe=="Pengeluaran" %}selected{% endif %}>
+              Pengeluaran
+          </option>
+  
+      </select>
+  
+      <!-- Kategori -->
+  
+      <select name="kategori">
+
+        <option value="">
+            Semua Kategori
+        </option>
+    
+        {% for item in daftar_kategori %}
+    
+        <option
+            value="{{ item.nama }}"
+            {% if kategori == item.nama %}selected{% endif %}>
+    
+            {{ item.nama }}
+    
+        </option>
+    
+        {% endfor %}
+    
+    </select>
+  
+      <!-- Tanggal -->
+  
+      <input
+          type="date"
+          name="tanggal_awal"
+          value="{{ tanggal_awal }}">
+  
+      <input
+          type="date"
+          name="tanggal_akhir"
+          value="{{ tanggal_akhir }}">
+  
+      <!-- Tombol -->
+  
+      <button class="btn-primary">
+  
+          <i class="fa-solid fa-filter"></i>
+  
+          Filter
+  
+      </button>
+  
+      <a href="/transaksi" class="btn-reset">
+  
+          Reset
+  
+      </a>
+  
+  </form>
+  
+  </section>
+
+<!-- ================================================= -->
+<!-- TABEL -->
+<!-- ================================================= -->
+
+<section class="table-card">
+  <table class="modern-table">
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+
+        <th>Keterangan</th>
+
+        <th>Kategori</th>
+
+        <th>Tipe</th>
+
+        <th>Nominal</th>
+
+        <th>Aksi</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for row in data %}
+
+      <tr>
+        <td>{{ row.tanggal | tanggal_indo }}</td>
+
+        <td>{{ row.keterangan }}</td>
+
+        <td>
+          <span class="badge"> {{ row.kategori }} </span>
+        </td>
+
+        <td>
+          {% if row.tipe=="Pemasukan" %}
+
+          <span class="income-text">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+
+            Pemasukan
+          </span>
+
+          {% else %}
+
+          <span class="expense-text">
+            <i class="fa-solid fa-arrow-trend-down"></i>
+
+            Pengeluaran
+          </span>
+
+          {% endif %}
+        </td>
+
+        <td>
+          <strong> {{ row.nominal | rupiah }} </strong>
+        </td>
+
+        <td>
+          <button class="btn-edit" data-id="{{ row.id }}" data-tanggal="{{ row.tanggal }}" data-keterangan="{{ row.keterangan }}" data-kategori="{{ row.kategori }}" data-tipe="{{ row.tipe }}" data-nominal="{{ row.nominal }}">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+
+          <button class="btn-delete" data-id="{{ row.id }}">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<!-- ================================================= -->
+<!-- PAGINATION -->
+<!-- ================================================= -->
+
+<div class="pagination">
+
+  {% if page > 1 %}
+
+  <a href="{{ url_for(
+      'transaksi',
+      page=page-1,
+      keyword=keyword,
+      tipe=tipe,
+      kategori=kategori,
+      tanggal_awal=tanggal_awal,
+      tanggal_akhir=tanggal_akhir
+  ) }}">
+    « Prev
+  </a>
+
+  {% endif %}
+
+
+  {% for i in range(1, total_page + 1) %}
+
+  <a
+    href="{{ url_for(
+        'transaksi',
+        page=i,
+        keyword=keyword,
+        tipe=tipe,
+        kategori=kategori,
+        tanggal_awal=tanggal_awal,
+        tanggal_akhir=tanggal_akhir
+    ) }}"
+    class="{% if i == page %}active-page{% endif %}">
+    {{ i }}
+  </a>
+
+  {% endfor %}
+
+
+  {% if page < total_page %}
+
+  <a href="{{ url_for(
+      'transaksi',
+      page=page+1,
+      keyword=keyword,
+      tipe=tipe,
+      kategori=kategori,
+      tanggal_awal=tanggal_awal,
+      tanggal_akhir=tanggal_akhir
+  ) }}">
+    Next »
+  </a>
+
+  {% endif %}
+
+</div>
+<!-- ================================================= -->
+<!-- MODAL TAMBAH TRANSAKSI -->
+<!-- ================================================= -->
+
+<div id="modalTambah" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>
+        <i class="fa-solid fa-plus"></i>
+
+        Tambah Transaksi
+      </h3>
+
+      <span class="close-modal">&times;</span>
+    </div>
+
+    <form action="/tambah" method="POST">
+      <div class="form-group">
+        <label>Tanggal</label>
+
+        <input type="date" name="tanggal" value="{{ today }}" required />
+      </div>
+
+      <div class="form-group">
+        <label>Keterangan</label>
+
+        <input type="text" name="keterangan" placeholder="Contoh : Gaji Bulanan" required />
+      </div>
+
+      <!-- ============================================= -->
+      <!-- TIPE -->
+      <!-- ============================================= -->
+      <div class="form-group">
+        <label>Tipe</label>
+        <select name="tipe" id="tipeTransaksi" required>
+          <option value="Pemasukan">
+            Pemasukan
+          </option>
+          <option value="Pengeluaran">
+            Pengeluaran
+          </option>
+        </select>
+      </div>
+      
+      <!-- ============================================= -->
+      <!-- KATEGORI -->
+      <!-- ============================================= -->
+      
+      <div class="form-group">
+        <label>Kategori</label>
+        <select
+        name="kategori"
+        id="kategoriTransaksi"
+        required
+        >
+        
+        <option value="">
+          Pilih Kategori
+        </option>
+          {% for item in daftar_kategori %}
+          
+          <option
+          value="{{ item.nama }}"
+           data-tipe="{{ item.tipe }}"
+           >
+           {{ item.nama }}
+          </option>
+          
+          {% endfor %}
+        
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nominal</label>
+
+        <input type="number" name="nominal" required />
+      </div>
+
+      <button type="submit" class="btn-primary">Simpan Transaksi</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================================================= -->
+<!-- MODAL EDIT TRANSAKSI -->
+<!-- ================================================= -->
+
+<div id="modalEdit" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>
+        <i class="fa-solid fa-pen"></i>
+        Edit Transaksi
+      </h3>
+      <span class="close-edit">&times;</span>
+    </div>
+
+    <form id="formEdit" method="POST">
+      <div class="form-group">
+        <label>Tanggal</label>
+        <input
+          id="editTanggal"
+          type="date"
+          name="tanggal"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Keterangan</label>
+        <input
+          id="editKeterangan"
+          type="text"
+          name="keterangan"
+          required
+        />
+      </div>
+
+      <!-- TIPE -->
+      <div class="form-group">
+        <label>Tipe</label>
+        <select
+          id="editTipe"
+          name="tipe"
+          required
+        >
+          <option value="Pemasukan">
+            Pemasukan
+          </option>
+          <option value="Pengeluaran">
+            Pengeluaran
+          </option>
+        </select>
+      </div>
+
+      <!-- KATEGORI -->
+
+      <div class="form-group">
+        <label>Kategori</label>
+        <select
+          id="editKategori"
+          name="kategori"
+          required
+        >
+          <option value="">
+            Pilih Kategori
+          </option>
+          {% for item in daftar_kategori %}
+            <option
+              value="{{ item.nama }}"
+              data-tipe="{{ item.tipe }}"
+            >
+              {{ item.nama }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nominal</label>
+        <input
+          id="editNominal"
+          type="number"
+          name="nominal"
+          required
+        />
+      </div>
+
+      <button
+        class="btn-primary"
+        type="submit"
+      >
+        Simpan Perubahan
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<!-- ================================================= -->
+<!-- MODAL HAPUS -->
+<!-- ================================================= -->
+
+<div id="modalDelete" class="modal">
+  <div class="modal-content delete-modal">
+    <div class="delete-icon">
+      <i class="fa-solid fa-trash"></i>
+    </div>
+
+    <h3>Hapus Transaksi?</h3>
+
+    <p>Data yang sudah dihapus tidak dapat dikembalikan.</p>
+
+    <div class="delete-action">
+      <button id="cancelDelete" class="btn-secondary">Batal</button>
+
+      <form id="deleteForm" method="POST">
+        <button class="btn-danger">Ya, Hapus</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block javascript %}
+
+<script src="{{ url_for('static',
+filename='js/transaksi.js') }}"></script>
+
+{% endblock %}

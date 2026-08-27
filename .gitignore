@@ -1,0 +1,21 @@
+# Database lokal
+database.db
+keuangan.db
+
+# File hasil export
+catatan_keuangan.xlsx
+laporan_keuangan.pdf
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# Backup
+backup/

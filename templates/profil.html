@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block title %} Profil - FINTRACK {% endblock %} {% block page_title %} Profil {% endblock %} {% block page_description %} Kelola informasi akun Anda. {% endblock %} {% block css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pengaturan.css') }}" />
+
+{% endblock %} {% block content %}
+
+<!-- ================================================= -->
+<!-- NOTIFIKASI -->
+<!-- ================================================= -->
+
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+
+<div class="password-message {{ category }}">{{ message }}</div>
+
+{% endfor %} {% endif %} {% endwith %}
+
+<div class="pengaturan-page">
+  <!-- ================================================= -->
+  <!-- INFORMASI AKUN -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-user"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Informasi Akun</h3>
+
+      <p>Username</p>
+
+      <strong> {{ user["username"] }} </strong>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- STATUS AKUN -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Status Akun</h3>
+
+      <p>Akun FINTRACK Anda sedang aktif dan dapat digunakan.</p>
+
+      <span class="account-status">
+        <i class="fa-solid fa-circle"></i>
+        Aktif
+      </span>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- KEAMANAN -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon">
+      <i class="fa-solid fa-shield-halved"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Keamanan Akun</h3>
+
+      <p>Ubah password akun Anda secara berkala untuk menjaga keamanan akun.</p>
+
+      <a href="{{ url_for('ganti_password') }}" class="btn-primary">
+        <i class="fa-solid fa-key"></i>
+        Ganti Password
+      </a>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- KEMBALI -->
+  <!-- ================================================= -->
+
+  <div class="profile-back">
+    <a href="{{ url_for('pengaturan') }}" class="btn-secondary">
+      <i class="fa-solid fa-arrow-left"></i>
+      Kembali ke Pengaturan
+    </a>
+  </div>
+</div>
+
+{% endblock %}

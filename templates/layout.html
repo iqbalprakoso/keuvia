@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="id">
+  <head>
+    <!-- ================================================= -->
+    <!-- META -->
+    <!-- ================================================= -->
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ================================================= -->
+    <!-- TITLE -->
+    <!-- ================================================= -->
+
+    <title>{% block title %} Catatan Keuangan Dashboard {% endblock %}</title>
+
+    <!-- ================================================= -->
+    <!-- FONT AWESOME -->
+    <!-- ================================================= -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- ================================================= -->
+    <!-- GLOBAL CSS -->
+    <!-- ================================================= -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+
+    <!-- ================================================= -->
+    <!-- CSS KHUSUS HALAMAN -->
+    <!-- ================================================= -->
+
+    {% block css %} {% endblock %}
+  </head>
+
+  <body>
+    <!-- ===================================================== -->
+    <!-- WRAPPER -->
+    <!-- ===================================================== -->
+
+    <div class="wrapper">
+      <!-- ================================================= -->
+      <!-- SIDEBAR -->
+      <!-- Berlaku untuk semua halaman -->
+      <!-- ================================================= -->
+
+      <aside class="sidebar">
+        <!-- ============================================= -->
+        <!-- LOGO -->
+        <!-- ============================================= -->
+
+        <div class="sidebar-logo">
+          <i class="fa-solid fa-wallet"></i>
+          <span>FINTRACK</span>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- MENU -->
+        <!-- ============================================= -->
+
+        <ul class="sidebar-menu">
+          <!-- Dashboard -->
+          <li class="active">
+            <a href="/">
+              <i class="fa-solid fa-house"></i>
+              Dashboard
+            </a>
+          </li>
+          <!-- Transaksi -->
+          <li>
+            <a href="/transaksi">
+              <i class="fa-solid fa-wallet"></i>
+              Transaksi
+            </a>
+          </li>
+          <!-- Target -->
+          <li>
+            <a href="/target">
+              <i class="fa-solid fa-bullseye"></i>
+              Target Tabungan
+            </a>
+          </li>
+          <!-- Kategori -->
+          <li>
+            <a href="/kategori">
+              <i class="fa-solid fa-layer-group"></i>
+              Kategori
+            </a>
+          </li>
+          <!-- Laporan -->
+          <li>
+            <a href="/laporan">
+              <i class="fa-solid fa-chart-column"></i>
+              Laporan
+            </a>
+          </li>
+          <!-- Pengaturan -->
+          <li>
+            <a href="/pengaturan">
+              <i class="fa-solid fa-gear"></i>
+              Pengaturan
+            </a>
+          </li>
+        </ul>
+
+        <!-- ============================================= -->
+        <!-- USER PROFILE -->
+        <!-- ============================================= -->
+
+        <div class="sidebar-user">
+          <div class="user-avatar">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="user-info">
+            <h4>{{ session.get("username", "User") }}</h4>
+            <small>Administrator</small>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ================================================= -->
+      <!-- MAIN CONTENT -->
+      <!-- ================================================= -->
+
+      <main class="main-content">
+        <!-- ================================================= -->
+        <!-- TOPBAR -->
+        <!-- Header yang digunakan semua halaman -->
+        <!-- ================================================= -->
+
+        <header class="topbar">
+          <!-- ============================================= -->
+          <!-- JUDUL HALAMAN -->
+          <!-- Diubah dari masing-masing route Flask -->
+          <!-- ============================================= -->
+
+          <div class="topbar-left">
+            <h1>{% block page_title %} Dashboard {% endblock %}</h1>
+            <p>{% block page_description %} Ringkasan Keuangan Anda {% endblock %}</p>
+          </div>
+
+          <!-- ============================================= -->
+          <!-- BAGIAN KANAN -->
+          <!-- ============================================= -->
+
+          <div class="topbar-right">
+            <!-- ========================================= -->
+            <!-- TANGGAL -->
+            <!-- ========================================= -->
+
+            <div class="date-box">
+              <i class="fa-regular fa-calendar"></i>
+              <span> {{ today | tanggal_indo }} </span>
+            </div>
+
+            <!-- ========================================= -->
+            <!-- USER -->
+            <!-- ========================================= -->
+
+            <div class="user-box">
+              <div class="user-avatar">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div class="user-name">
+                <span>Selamat Datang</span>
+                <strong>{{ session.get("username", "User") }}</strong>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- ================================================= -->
+        <!-- CONTENT -->
+        <!-- Semua halaman akan mengisi block ini -->
+        <!-- ================================================= -->
+
+        <div class="container">
+          <!-- ================================================= -->
+          <!-- FLASH NOTIFICATION -->
+          <!-- ================================================= -->
+
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+
+          <div class="flash-container">
+            {% for category, message in messages %}
+
+            <div class="flash-message {{ category }}">
+              <div class="flash-icon">
+                {% if category == "success" %}
+                <i class="fa-solid fa-circle-check"></i>
+                {% else %}
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {% endif %}
+              </div>
+
+              <span>{{ message }}</span>
+
+              <button type="button" class="flash-close" onclick="this.parentElement.remove()">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            {% endfor %}
+          </div>
+
+          {% endif %} {% endwith %} {% block content %}{% endblock %}
+        </div>
+
+        <!-- ================================================= -->
+        <!-- FOOTER -->
+        <!-- Digunakan oleh semua halaman -->
+        <!-- ================================================= -->
+
+        <footer class="dashboard-footer">
+          <div class="footer-left">
+            <p>© 2026 FINTRACK Dashboard</p>
+          </div>
+          <div class="footer-right">
+            <span> Dibuat menggunakan </span>
+            <i class="fa-solid fa-heart"></i>
+            <span> Flask & SQLite </span>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      setTimeout(() => {
+        document.querySelectorAll(".flash-message").forEach((message) => {
+          message.style.transition = "opacity 0.4s ease";
+          message.style.opacity = "0";
+
+          setTimeout(() => {
+            message.remove();
+          }, 400);
+        });
+      }, 3000);
+    </script>
+
+    <!-- ================================================= -->
+    <!-- CHART.JS -->
+    <!-- ================================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- ================================================= -->
+    <!-- JAVASCRIPT KHUSUS HALAMAN -->
+    <!-- ================================================= -->
+
+    {% block javascript %}{% endblock %}
+  </body>
+</html>

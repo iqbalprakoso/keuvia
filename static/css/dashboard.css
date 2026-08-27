@@ -1,0 +1,804 @@
+/* ==========================================================
+   DASHBOARD
+   Isi halaman Dashboard
+========================================================== */
+
+/* ==========================================================
+   GRID KPI
+========================================================== */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+/* ==========================================================
+ ROW DASHBOARD
+========================================================== */
+
+.dashboard-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 24px;
+
+  margin-bottom: 24px;
+
+  align-items: stretch;
+}
+
+/* ==========================================================
+ CARD UMUM
+========================================================== */
+
+.dashboard-card {
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+
+  border: 1px solid #eef2f7;
+}
+
+/* ==========================================================
+ HEADER CARD
+========================================================== */
+
+.card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.card-header h3 {
+  font-size: 20px;
+
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.card-header i {
+  color: #2563eb;
+
+  margin-right: 8px;
+}
+
+/* ==========================================================
+ BUTTON
+========================================================== */
+
+.btn-detail {
+  background: #eef4ff;
+
+  color: #2563eb;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.btn-detail:hover {
+  background: #2563eb;
+
+  color: white;
+}
+
+/* ==========================================================
+   KPI CARD
+========================================================== */
+
+.stat-card {
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  padding: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  border: 1px solid #eef2f7;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+
+  transition: 0.25s;
+
+  min-height: 120px;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================
+ ICON
+========================================================== */
+
+.stat-icon {
+  width: 64px;
+
+  height: 64px;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 26px;
+
+  flex-shrink: 0;
+}
+
+/* ==========================================================
+ WARNA ICON
+========================================================== */
+
+.income-card .stat-icon {
+  background: #16a34a;
+}
+
+.expense-card .stat-icon {
+  background: #dc2626;
+}
+
+.balance-card .stat-icon {
+  background: #2563eb;
+}
+
+.transaction-card .stat-icon {
+  background: #7c3aed;
+}
+
+/* ==========================================================
+ INFO
+========================================================== */
+
+.stat-info {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  flex: 1;
+}
+
+/* ==========================================================
+ JUDUL
+========================================================== */
+
+.stat-info span {
+  color: #6b7280;
+
+  font-size: 14px;
+
+  margin-bottom: 6px;
+}
+
+/* ==========================================================
+ ANGKA
+========================================================== */
+
+.stat-info h2 {
+  font-size: 28px;
+
+  font-weight: 700;
+
+  color: #111827;
+
+  margin-bottom: 6px;
+}
+
+/* ==========================================================
+ KETERANGAN
+========================================================== */
+
+.stat-info small {
+  color: #94a3b8;
+
+  font-size: 13px;
+}
+
+/* ==========================================================
+   TARGET TABUNGAN
+========================================================== */
+
+.target-card {
+  display: flex;
+
+  flex-direction: column;
+
+  min-height: 420px;
+}
+
+/* ==========================================================
+ JUDUL TARGET
+========================================================== */
+
+.target-body h2 {
+  font-size: 28px;
+
+  color: #111827;
+
+  margin-bottom: 10px;
+}
+
+.target-body p {
+  color: #6b7280;
+
+  margin-bottom: 25px;
+
+  font-size: 15px;
+}
+
+/* ==========================================================
+ PROGRESS BAR
+========================================================== */
+
+.progress-wrapper {
+  margin-bottom: 30px;
+}
+
+.progress {
+  width: 100%;
+
+  height: 14px;
+
+  background: #e5e7eb;
+
+  border-radius: 30px;
+
+  overflow: hidden;
+
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  height: 100%;
+
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+
+  border-radius: 30px;
+
+  transition: width 0.4s ease;
+}
+
+.progress-wrapper span {
+  font-weight: 700;
+
+  color: #2563eb;
+}
+
+/* ==========================================================
+ INFO TARGET
+========================================================== */
+
+.target-info {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 16px;
+
+  margin-top: auto;
+}
+
+/* ==========================================================
+ BOX INFO
+========================================================== */
+
+.info-card {
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+
+  padding: 18px;
+
+  text-align: center;
+}
+
+.info-card small {
+  display: block;
+
+  color: #94a3b8;
+
+  margin-bottom: 10px;
+
+  font-size: 13px;
+}
+
+.info-card strong {
+  font-size: 17px;
+
+  color: #111827;
+}
+
+/* ==========================================================
+ BELUM ADA TARGET
+========================================================== */
+
+.empty-target {
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+}
+
+.empty-target i {
+  font-size: 60px;
+
+  color: #2563eb;
+
+  margin-bottom: 20px;
+}
+
+.empty-target h3 {
+  margin-bottom: 10px;
+
+  font-size: 24px;
+}
+
+.empty-target p {
+  color: #6b7280;
+
+  margin-bottom: 25px;
+}
+
+/* ==========================================================
+ BUTTON BUAT TARGET
+========================================================== */
+
+.btn-create {
+  background: #2563eb;
+
+  color: white;
+
+  padding: 12px 24px;
+
+  border-radius: 12px;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+}
+
+.btn-create:hover {
+  background: #1d4ed8;
+}
+
+/* ==========================================================
+   GRAFIK BULANAN
+========================================================== */
+
+.chart-card {
+  display: flex;
+
+  flex-direction: column;
+
+  min-height: 420px;
+}
+
+/* ==========================================================
+ FILTER TAHUN
+========================================================== */
+
+.chart-filter select {
+  padding: 10px 14px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+/* ==========================================================
+ LEGEND
+========================================================== */
+
+.chart-legend {
+  display: flex;
+
+  gap: 25px;
+
+  margin-bottom: 20px;
+}
+
+.legend-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 14px;
+
+  color: #6b7280;
+}
+
+.legend-color {
+  width: 14px;
+
+  height: 14px;
+
+  border-radius: 50%;
+}
+
+/* ==========================================================
+ WARNA KETERANGAN DIAGRAM BATANG
+========================================================== */
+
+.income-color {
+  background: #90caf9;
+}
+
+.expense-color {
+  background: #f8a5b5;
+}
+
+/* ==========================================================
+ CANVAS
+========================================================== */
+
+.chart-wrapper canvas {
+  width: 100% !important;
+
+  height: 100% !important;
+}
+
+/* ==========================================================
+ CARD GRAFIK
+========================================================== */
+
+.chart-card {
+  border: 1px solid #eef2f7;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================
+   TRANSAKSI TERBARU
+========================================================== */
+
+.table-responsive {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+/* ==========================================================
+ TABEL
+========================================================== */
+
+.modern-table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+/* ==========================================================
+ HEADER TABEL
+========================================================== */
+
+.modern-table thead tr {
+  background: #f8fafc;
+}
+
+.modern-table th {
+  padding: 16px;
+
+  text-align: left;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #64748b;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ==========================================================
+ ISI TABEL
+========================================================== */
+
+.modern-table td {
+  padding: 18px 16px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  font-size: 14px;
+
+  color: #374151;
+
+  vertical-align: middle;
+}
+
+/* ==========================================================
+ HOVER
+========================================================== */
+
+.modern-table tbody tr {
+  transition: 0.25s;
+}
+
+.modern-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ==========================================================
+ BADGE KATEGORI
+========================================================== */
+
+.badge {
+  display: inline-block;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  background: #eef4ff;
+
+  color: #2563eb;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+ TIPE TRANSAKSI
+========================================================== */
+
+.income-text {
+  color: #16a34a;
+
+  font-weight: 600;
+}
+
+.expense-text {
+  color: #dc2626;
+
+  font-weight: 600;
+}
+
+.income-text i,
+.expense-text i {
+  margin-right: 6px;
+}
+
+/* ==========================================================
+ NOMINAL
+========================================================== */
+
+.modern-table strong {
+  color: #111827;
+
+  font-size: 15px;
+}
+
+/* ==========================================================
+ CARD TRANSAKSI
+========================================================== */
+
+.dashboard-row:last-child .dashboard-card:first-child {
+  min-height: 500px;
+}
+
+/* ==========================================================
+   REFINEMENT DASHBOARD
+========================================================== */
+
+/* ==========================================================
+   KPI CARD
+========================================================== */
+
+.stat-card {
+  min-height: 140px;
+}
+
+.stat-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 28px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Warna transparan seperti dashboard modern */
+
+.income-card .stat-icon {
+  background: #dcfce7;
+
+  color: #16a34a;
+}
+
+.expense-card .stat-icon {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.balance-card .stat-icon {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+.transaction-card .stat-icon {
+  background: #ede9fe;
+
+  color: #7c3aed;
+}
+
+/* ==========================================================
+   ROW TARGET & GRAFIK
+========================================================== */
+
+.dashboard-row {
+  align-items: stretch;
+}
+
+.target-card,
+.chart-card {
+  min-height: 470px;
+}
+
+/* ==========================================================
+   PROGRESS BAR
+========================================================== */
+
+.progress {
+  height: 12px;
+}
+
+.progress-bar {
+  border-radius: 30px;
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+
+.modern-table {
+  table-layout: fixed;
+}
+
+.modern-table th,
+.modern-table td {
+  padding: 18px;
+}
+
+.modern-table td:last-child {
+  width: 130px;
+
+  white-space: nowrap;
+}
+
+.modern-table td:nth-child(2) {
+  width: 260px;
+}
+
+/* ==========================================================
+   BADGE
+========================================================== */
+
+.badge {
+  padding: 7px 14px;
+
+  font-size: 12px;
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.dashboard-footer {
+  margin-top: 40px;
+  padding: 25px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*==========================================================
+DONUT CHART
+==========================================================*/
+
+.donut-card {
+  min-height: 500px;
+}
+
+/* ==========================================================
+ AREA CHART
+========================================================== */
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  padding-top: 15px;
+}
+
+.donut-wrapper {
+  position: relative;
+  width: 100%;
+  height: 360px;
+}
+
+.chart-wrapper canvas,
+.donut-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

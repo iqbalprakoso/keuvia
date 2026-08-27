@@ -1,0 +1,181 @@
+{% extends "layout.html" %} {% block css %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/kategori.css') }}" />
+
+{% endblock %} {% block page_title %} Kategori {% endblock %} {% block page_description %} Kelola kategori transaksi Anda. {% endblock %} {% block content %}
+
+<div class="kategori-page">
+  <div class="kategori-header">
+    <button type="button" class="btn-add-kategori" id="btnTambahKategori">
+      <i class="fa-solid fa-plus"></i>
+      Tambah Kategori
+    </button>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- DAFTAR KATEGORI -->
+  <!-- ============================================= -->
+
+  <div class="kategori-card">
+    <div class="kategori-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama Kategori</th>
+            <th>Jenis</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for item in data_kategori %}
+
+          <tr>
+            <td>{{ item.nama }}</td>
+
+            <td>
+              {% if item.tipe == "Pemasukan" %}
+
+              <span class="badge-pemasukan"> Pemasukan </span>
+
+              {% else %}
+
+              <span class="badge-pengeluaran"> Pengeluaran </span>
+
+              {% endif %}
+            </td>
+
+            <td>
+              <button type="button" class="btn-edit-kategori" data-id="{{ item.id }}" data-nama="{{ item.nama }}" data-tipe="{{ item.tipe }}">
+                <i class="fa-solid fa-pen"></i>
+                Edit
+              </button>
+
+              <button type="button" class="btn-delete-kategori" data-id="{{ item.id }}" data-nama="{{ item.nama }}">
+                <i class="fa-solid fa-trash"></i>
+                Hapus
+              </button>
+            </td>
+          </tr>
+
+          {% else %}
+
+          <tr>
+            <td colspan="3" class="empty-kategori">Belum ada kategori.</td>
+          </tr>
+
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- MODAL TAMBAH KATEGORI -->
+  <!-- ================================================= -->
+
+  <div class="modal" id="modalKategori">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🏷️ Tambah Kategori</h2>
+
+        <span class="close-kategori"> &times; </span>
+      </div>
+
+      <form action="/kategori/tambah" method="POST" id="kategoriForm">
+        <div class="form-group">
+          <label> Nama Kategori </label>
+
+          <input type="text" name="nama" placeholder="Contoh: Makan" required />
+        </div>
+
+        <div class="form-group">
+          <label> Jenis Kategori </label>
+
+          <select name="tipe" required>
+            <option value="">Pilih Jenis</option>
+
+            <option value="Pemasukan">Pemasukan</option>
+
+            <option value="Pengeluaran">Pengeluaran</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-save-kategori">
+          <i class="fa-solid fa-check"></i>
+          Simpan Kategori
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================= -->
+<!-- MODAL EDIT KATEGORI -->
+<!-- ================================================= -->
+
+<div class="modal" id="modalEditKategori">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>✏️ Edit Kategori</h2>
+
+      <span class="close-edit-kategori"> &times; </span>
+    </div>
+
+    <form id="formEditKategori" method="POST">
+      <div class="form-group">
+        <label> Nama Kategori </label>
+
+        <input type="text" name="nama" id="editNamaKategori" required />
+      </div>
+
+      <div class="form-group">
+        <label> Jenis Kategori </label>
+
+        <select name="tipe" id="editTipeKategori" required>
+          <option value="Pemasukan">Pemasukan</option>
+
+          <option value="Pengeluaran">Pengeluaran</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-save-kategori">
+        <i class="fa-solid fa-check"></i>
+        Simpan Perubahan
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================================================= -->
+<!-- MODAL HAPUS KATEGORI -->
+<!-- ================================================= -->
+
+<div class="modal" id="modalHapusKategori">
+  <div class="modal-content delete-content">
+    <div class="modal-header">
+      <h2>🗑️ Hapus Kategori</h2>
+
+      <span class="close-hapus-kategori"> &times; </span>
+    </div>
+
+    <p>
+      Apakah kamu yakin ingin menghapus kategori
+      <strong id="namaHapusKategori"></strong>?
+    </p>
+
+    <div class="delete-action">
+      <button type="button" class="btn-cancel" id="btnBatalHapusKategori">Batal</button>
+
+      <form id="formHapusKategori" method="POST">
+        <button type="submit" class="btn-danger">
+          <i class="fa-solid fa-trash"></i>
+          Hapus
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block javascript %}
+<script src="{{ url_for('static', filename='js/kategori.js') }}"></script>
+{% endblock %}

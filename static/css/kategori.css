@@ -1,0 +1,430 @@
+/* ==========================================================
+   HALAMAN KATEGORI
+========================================================== */
+
+.kategori-page {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* ==========================================================
+   HEADER KATEGORI
+========================================================== */
+
+.kategori-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kategori-header h2 {
+  margin: 0;
+  font-size: 26px;
+  color: #111827;
+}
+
+.kategori-header p {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ==========================================================
+   BUTTON TAMBAH
+========================================================== */
+
+.btn-add-kategori {
+  background: #2563eb;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 10px;
+
+  padding: 11px 18px;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: 0.2s;
+}
+
+.btn-add-kategori:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================
+   CARD TABEL
+========================================================== */
+
+.kategori-card {
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  padding: 20px;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+
+  overflow: hidden;
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+
+.kategori-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.kategori-table table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 14px;
+}
+
+.kategori-table th {
+  text-align: left;
+
+  background: #f8fafc;
+
+  color: #475569;
+
+  font-weight: 600;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.kategori-table td {
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #eef2f7;
+
+  color: #334155;
+}
+
+.kategori-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ==========================================================
+   BADGE
+========================================================== */
+
+.badge-pemasukan {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background: #dcfce7;
+
+  color: #16a34a;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.badge-pengeluaran {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+/* ==========================================================
+   BUTTON AKSI
+========================================================== */
+
+.btn-edit-kategori,
+.btn-delete-kategori {
+  border: none;
+
+  padding: 8px 12px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  margin-right: 5px;
+}
+
+.btn-edit-kategori {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.btn-delete-kategori {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ==========================================================
+   KOSONG
+========================================================== */
+
+.empty-kategori {
+  text-align: center;
+
+  padding: 30px !important;
+
+  color: #64748b !important;
+}
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+.modal {
+  display: none;
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+.modal-content {
+  width: 420px;
+
+  max-width: 90%;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  padding: 25px;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  color: #111827;
+}
+
+.close-kategori {
+  font-size: 26px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  color: #64748b;
+}
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  margin-bottom: 7px;
+
+  font-weight: 600;
+
+  color: #374151;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 12px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 9px;
+
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+}
+
+/* ==========================================================
+   BUTTON SIMPAN
+========================================================== */
+
+.btn-save-kategori {
+  width: 100%;
+
+  padding: 12px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.btn-save-kategori:hover {
+  background: #1d4ed8;
+}
+
+/* ==========================================================
+   DELETE MODAL
+========================================================== */
+
+.delete-content {
+  max-width: 420px;
+  text-align: center;
+}
+
+.delete-content .modal-header {
+  margin-bottom: 15px;
+}
+
+.delete-content p {
+  color: #64748b;
+  margin: 15px 0 25px;
+  line-height: 1.6;
+}
+
+.delete-content p strong {
+  color: #111827;
+}
+
+.delete-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-action form {
+  margin: 0;
+}
+
+.btn-cancel {
+  padding: 10px 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #e5e7eb;
+  color: #374151;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background: #d1d5db;
+}
+
+.btn-danger {
+  padding: 10px 18px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #ef4444;
+  color: #ffffff;
+
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+/* ==========================================================
+   FLASH MESSAGE
+========================================================== */
+
+.flash-container {
+  margin-bottom: 15px;
+}
+
+.flash-message {
+  padding: 12px 16px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+.flash-message.success {
+  background: #dcfce7;
+
+  color: #166534;
+
+  border: 1px solid #bbf7d0;
+}
+
+.flash-message.error {
+  background: #fee2e2;
+
+  color: #991b1b;
+
+  border: 1px solid #fecaca;
+}

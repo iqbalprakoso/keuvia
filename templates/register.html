@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Daftar Akun - FINTRACK</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+      /* ==========================================================
+       BODY
+    ========================================================== */
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+
+        min-height: 100vh;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #f1f5f9;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        color: #0f172a;
+      }
+
+      /* ==========================================================
+       REGISTER CARD
+    ========================================================== */
+
+      .register-card {
+        width: 100%;
+
+        max-width: 320px;
+
+        background: #ffffff;
+
+        border-radius: 15px;
+
+        padding: 28px;
+
+        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+      }
+
+      /* ==========================================================
+       ICON
+    ========================================================== */
+
+      .register-icon {
+        width: 44px;
+        height: 44px;
+
+        margin: 0 auto 10px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 11px;
+
+        background: #3b82f6;
+
+        color: #ffffff;
+
+        font-size: 18px;
+      }
+
+      /* ==========================================================
+       TITLE
+    ========================================================== */
+
+      .register-title {
+        text-align: center;
+
+        margin-bottom: 22px;
+      }
+
+      .register-title h1 {
+        margin: 0 0 5px;
+
+        font-size: 20px;
+
+        font-weight: 700;
+      }
+
+      .register-title p {
+        margin: 0;
+
+        color: #64748b;
+
+        font-size: 11px;
+      }
+
+      /* ==========================================================
+       FORM
+    ========================================================== */
+
+      .register-form-group {
+        margin-bottom: 14px;
+      }
+
+      .register-form-group label {
+        display: block;
+
+        margin-bottom: 6px;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        color: #334155;
+      }
+
+      /* ==========================================================
+       INPUT
+    ========================================================== */
+
+      .register-input-wrapper {
+        position: relative;
+      }
+
+      .register-input-wrapper i {
+        position: absolute;
+
+        left: 11px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #94a3b8;
+
+        font-size: 12px;
+      }
+
+      .register-form-group input {
+        width: 100%;
+
+        height: 34px;
+
+        padding: 0 12px 0 32px;
+
+        border: 1px solid #cbd5e1;
+
+        border-radius: 7px;
+
+        outline: none;
+
+        font-size: 11px;
+
+        color: #334155;
+
+        background: #ffffff;
+      }
+
+      .register-form-group input:focus {
+        border-color: #3b82f6;
+
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+      }
+
+      /* ==========================================================
+       FLASH MESSAGE
+    ========================================================== */
+
+      .register-message {
+        padding: 9px 10px;
+
+        margin-bottom: 14px;
+
+        border-radius: 7px;
+
+        font-size: 11px;
+
+        font-weight: 500;
+      }
+
+      .register-message.success {
+        background: #dcfce7;
+
+        color: #166534;
+
+        border: 1px solid #bbf7d0;
+      }
+
+      .register-message.error {
+        background: #fee2e2;
+
+        color: #991b1b;
+
+        border: 1px solid #fecaca;
+      }
+
+      /* ==========================================================
+       BUTTON
+    ========================================================== */
+
+      .btn-register {
+        width: 100%;
+
+        height: 32px;
+
+        border: none;
+
+        border-radius: 7px;
+
+        background: #3b82f6;
+
+        color: #ffffff;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+      }
+
+      .btn-register:hover {
+        background: #2563eb;
+      }
+
+      /* ==========================================================
+       LOGIN LINK
+    ========================================================== */
+
+      .register-login {
+        margin-top: 15px;
+
+        text-align: center;
+
+        color: #64748b;
+
+        font-size: 10px;
+      }
+
+      .register-login a {
+        color: #2563eb;
+
+        font-weight: 600;
+
+        text-decoration: none;
+      }
+
+      .register-login a:hover {
+        text-decoration: underline;
+      }
+
+      /* ==========================================================
+       FOOTER
+    ========================================================== */
+
+      .register-footer {
+        margin-top: 20px;
+
+        text-align: center;
+
+        color: #94a3b8;
+
+        font-size: 9px;
+      }
+
+      /* ==========================================================
+       RESPONSIVE
+    ========================================================== */
+
+      @media (max-width: 400px) {
+        .register-card {
+          margin: 15px;
+
+          padding: 24px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="register-card">
+      <!-- ================================================= -->
+      <!-- ICON -->
+      <!-- ================================================= -->
+
+      <div class="register-icon">
+        <i class="fa-solid fa-user-plus"></i>
+      </div>
+
+      <!-- ================================================= -->
+      <!-- TITLE -->
+      <!-- ================================================= -->
+
+      <div class="register-title">
+        <h1>Buat Akun FINTRACK</h1>
+
+        <p>Daftar untuk mulai mencatat keuangan Anda.</p>
+      </div>
+
+      <!-- ================================================= -->
+      <!-- FLASH MESSAGE -->
+      <!-- ================================================= -->
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
+
+      <div class="register-message {{ category }}">{{ message }}</div>
+
+      {% endfor %} {% endif %} {% endwith %}
+
+      <!-- ================================================= -->
+      <!-- FORM -->
+      <!-- ================================================= -->
+
+      <form action="{{ url_for('register') }}" method="POST">
+        <!-- USERNAME -->
+
+        <div class="register-form-group">
+          <label> Username </label>
+
+          <div class="register-input-wrapper">
+            <i class="fa-solid fa-user"></i>
+
+            <input type="text" name="username" placeholder="Masukkan username" minlength="3" maxlength="30" autocomplete="username" required />
+          </div>
+        </div>
+
+        <!-- PASSWORD -->
+
+        <div class="register-form-group">
+          <label> Password </label>
+
+          <div class="register-input-wrapper">
+            <i class="fa-solid fa-lock"></i>
+
+            <input type="password" name="password" placeholder="Minimal 6 karakter" minlength="6" autocomplete="new-password" required />
+          </div>
+        </div>
+
+        <!-- KONFIRMASI -->
+
+        <div class="register-form-group">
+          <label> Konfirmasi Password </label>
+
+          <div class="register-input-wrapper">
+            <i class="fa-solid fa-lock"></i>
+
+            <input type="password" name="konfirmasi" placeholder="Ulangi password" minlength="6" autocomplete="new-password" required />
+          </div>
+        </div>
+
+        <!-- BUTTON -->
+
+        <button type="submit" class="btn-register">
+          <i class="fa-solid fa-user-plus"></i>
+
+          Daftar Akun
+        </button>
+      </form>
+
+      <!-- ================================================= -->
+      <!-- LOGIN -->
+      <!-- ================================================= -->
+
+      <div class="register-login">
+        Sudah punya akun?
+
+        <a href="{{ url_for('login') }}"> Login </a>
+      </div>
+
+      <!-- ================================================= -->
+      <!-- FOOTER -->
+      <!-- ================================================= -->
+
+      <div class="register-footer">© 2026 FINTRACK</div>
+    </div>
+  </body>
+</html>
