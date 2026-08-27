@@ -368,12 +368,23 @@ def init_db():
 
     conn = get_db()
 
-    # ---------------------------------------------
-    # TABEL TRANSAKSI
-    # ---------------------------------------------
+    # ======================================================
+    # TABEL USERS
+    # ======================================================
 
     conn.execute("""
+        CREATE TABLE IF NOT EXISTS users(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    """)
 
+    # ======================================================
+    # TABEL TRANSAKSI
+    # ======================================================
+
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS transaksi(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             tanggal TEXT NOT NULL,
@@ -382,53 +393,54 @@ def init_db():
             tipe TEXT NOT NULL,
             nominal INTEGER NOT NULL
         )
-
     """)
 
-    # ---------------------------------------------
+    # ======================================================
     # TABEL TARGET TABUNGAN
-    # ---------------------------------------------
+    # ======================================================
 
     conn.execute("""
-
         CREATE TABLE IF NOT EXISTS target_tabungan(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nama_target TEXT NOT NULL,
             nominal_target INTEGER NOT NULL,
             tanggal_target TEXT
         )
-
     """)
-    
-    # ==========================================================
-    # TAMBAH KOLOM TERKUMPUL (JIKA BELUM ADA)
-    # ==========================================================
-    
+
+
+    # ======================================================
+    # TAMBAH KOLOM TERKUMPUL
+    # Untuk database lama
+    # ======================================================
+
     try:
-            conn.execute("""
+
+        conn.execute("""
             ALTER TABLE target_tabungan
             ADD COLUMN terkumpul INTEGER DEFAULT 0
-            """)
-    except:
-        pass
-    
-    # ---------------------------------------------
-    # TABEL USERS
-    # ---------------------------------------------
-    
-    conn.execute("""
+        """)
 
-    CREATE TABLE IF NOT EXISTS users(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
-    )
-                 
-                 """)
-    
-    # ==========================================================
-    # TAMBAH USER_ID KE TABEL TRANSAKSI
-    # ==========================================================
+    except sqlite3.OperationalError:
+
+        pass
+
+    # ======================================================
+    # TABEL KATEGORI
+    # ======================================================
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS kategori(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nama TEXT NOT NULL,
+            tipe TEXT NOT NULL
+        )
+    """)
+
+    # ======================================================
+    # TAMBAH USER_ID KE TRANSAKSI
+    # Untuk database lama
+    # ======================================================
 
     try:
 
@@ -441,10 +453,10 @@ def init_db():
 
         pass
 
-
-    # ==========================================================
-    # TAMBAH USER_ID KE TABEL TARGET
-    # ==========================================================
+    # ======================================================
+    # TAMBAH USER_ID KE TARGET
+    # Untuk database lama
+    # ======================================================
 
     try:
 
@@ -457,10 +469,10 @@ def init_db():
 
         pass
 
-
-    # ==========================================================
-    # TAMBAH USER_ID KE TABEL KATEGORI
-    # ==========================================================
+    # ======================================================
+    # TAMBAH USER_ID KE KATEGORI
+    # Untuk database lama
+    # ======================================================
 
     try:
 
@@ -473,83 +485,10 @@ def init_db():
 
         pass
 
-    # ---------------------------------------------
-    # AKUN ADMIN DEFAULT
-    # ---------------------------------------------
-    
-    admin = conn.execute("""
-    SELECT id
-    FROM users
-    WHERE username = ?
-    """, ("admin",)).fetchone()
-    
-    if not admin:
-        password_hash = generate_password_hash("admin123")
-        conn.execute("""
-                     INSERT INTO users (username, password)
-                     VALUES (?, ?)
-                     """, (
-                         
-                         "admin",
-                         password_hash
-                         
-                        ))
-        
-    # ==========================================================
-    # AMBIL ID ADMIN
-    # ==========================================================
-
-    admin = conn.execute("""
-        SELECT id
-        FROM users
-        WHERE username = ?
-    """, ("admin",)).fetchone()
-
-
-    admin_id = admin["id"]
-
-
-    # ==========================================================
-    # DATA LAMA MENJADI MILIK ADMIN
-    # ==========================================================
-
-    conn.execute("""
-        UPDATE transaksi
-        SET user_id = ?
-        WHERE user_id IS NULL
-    """, (admin_id,))
-
-
-    conn.execute("""
-        UPDATE target_tabungan
-        SET user_id = ?
-        WHERE user_id IS NULL
-    """, (admin_id,))
-
-
-    conn.execute("""
-        UPDATE kategori
-        SET user_id = ?
-        WHERE user_id IS NULL
-    """, (admin_id,))
-
-    # ---------------------------------------------
-    # TABEL KATEGORI
-    # ---------------------------------------------
-
-    conn.execute("""
-
-        CREATE TABLE IF NOT EXISTS kategori(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nama TEXT NOT NULL,
-            tipe TEXT NOT NULL
-        )
-
-    """)
-
-    # ==========================================================
-    # TAMBAH KOLOM WARNA KATEGORI
-    # ==========================================================
+    # ======================================================
+    # TAMBAH WARNA KE KATEGORI
+    # Untuk database lama
+    # ======================================================
 
     try:
 
@@ -560,41 +499,106 @@ def init_db():
 
     except sqlite3.OperationalError:
 
-        # Kolom sudah ada
         pass
 
-        # ==========================================================
-        # MEMBERIKAN WARNA PADA KATEGORI LAMA
-        # ==========================================================
+    # ======================================================
+    # AKUN ADMIN DEFAULT
+    # ======================================================
 
-        kategori_tanpa_warna = conn.execute("""
-            SELECT id
-            FROM kategori
-            WHERE warna IS NULL
-            ORDER BY id
-        """).fetchall()
+    admin = conn.execute("""
+        SELECT id
+        FROM users
+        WHERE username = ?
+    """, ("admin",)).fetchone()
 
-        for item in kategori_tanpa_warna:
+    if not admin:
 
-            warna = get_next_category_color(conn)
+        password_hash = generate_password_hash(
+            "admin123"
+        )
 
-            conn.execute("""
-                UPDATE kategori
-                SET warna = ?
-                WHERE id = ?
-            """, (
-                warna,
-                item["id"]
-            ))
+        conn.execute("""
+            INSERT INTO users(
+                username,
+                password
+            )
+            VALUES(?, ?)
+        """, (
+            "admin",
+            password_hash
+        ))
 
+    # ======================================================
+    # AMBIL ID ADMIN
+    # ======================================================
 
-        # ==========================================================
-        # SIMPAN DATABASE
-        # ==========================================================
+    admin = conn.execute("""
+        SELECT id
+        FROM users
+        WHERE username = ?
+    """, ("admin",)).fetchone()
 
-        conn.commit()
+    admin_id = admin["id"]
 
-        conn.close()
+    # ======================================================
+    # DATA LAMA MENJADI MILIK ADMIN
+    # ======================================================
+
+    conn.execute("""
+        UPDATE transaksi
+        SET user_id = ?
+        WHERE user_id IS NULL
+    """, (
+        admin_id,
+    ))
+
+    conn.execute("""
+        UPDATE target_tabungan
+        SET user_id = ?
+        WHERE user_id IS NULL
+    """, (
+        admin_id,
+    ))
+
+    conn.execute("""
+        UPDATE kategori
+        SET user_id = ?
+        WHERE user_id IS NULL
+    """, (
+        admin_id,
+    ))
+
+    # ======================================================
+    # MEMBERIKAN WARNA PADA KATEGORI YANG BELUM MEMILIKI WARNA
+    # ======================================================
+
+    kategori_tanpa_warna = conn.execute("""
+        SELECT id
+        FROM kategori
+        WHERE warna IS NULL
+        ORDER BY id
+    """).fetchall()
+
+    for item in kategori_tanpa_warna:
+
+        warna = get_next_category_color(conn)
+
+        conn.execute("""
+            UPDATE kategori
+            SET warna = ?
+            WHERE id = ?
+        """, (
+            warna,
+            item["id"]
+        ))
+
+    # ======================================================
+    # SIMPAN DATABASE
+    # ======================================================
+
+    conn.commit()
+
+    conn.close()
 
 # ==========================================================
 # HELPER FUNCTION
