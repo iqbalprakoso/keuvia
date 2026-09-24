@@ -346,9 +346,9 @@ def get_next_category_color(conn):
     # Kalau semua warna sudah digunakan,
     # gunakan warna berdasarkan jumlah kategori
     jumlah = conn.execute("""
-        SELECT COUNT(*)
+        SELECT COUNT(*) AS jumlah
         FROM kategori
-    """).fetchone()[0]
+    """).fetchone()["jumlah"]
 
     return WARNA_KATEGORI[
         jumlah % len(WARNA_KATEGORI)
@@ -2388,7 +2388,7 @@ def export_pdf():
 
         Paragraph(
 
-            "Laporan Keuangan FINTRACK",
+            "Laporan Keuangan KEUVIA",
 
             styles["Heading1"]
 

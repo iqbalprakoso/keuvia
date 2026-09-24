@@ -1,33 +1,33 @@
-# FINTRACK
+# KEUVIA
 
-**FINTRACK** adalah aplikasi manajemen keuangan pribadi berbasis web yang dibuat untuk membantu pengguna mencatat, mengelola, dan memantau kondisi keuangan secara lebih terstruktur.
+**KEUVIA (Kelola Uang, Evaluasi, Visualisasi, dan Anggaran)** adalah aplikasi manajemen keuangan pribadi berbasis web yang dibuat untuk membantu pengguna mencatat, mengelola, dan memantau kondisi keuangan secara lebih terstruktur.
 
 ## Fitur
 
--  Login dan autentikasi pengguna
--  Registrasi akun
--  Profil pengguna
--  Ganti password
--  Pencatatan pemasukan
--  Pencatatan pengeluaran
--  Manajemen kategori transaksi
--  Edit transaksi
--  Hapus transaksi
--  Target tabungan
--  Dashboard keuangan
--  Grafik pemasukan dan pengeluaran
--  Grafik pengeluaran berdasarkan kategori
--  Filter laporan berdasarkan tanggal, kategori, dan tipe transaksi
--  Pagination laporan
--  Export laporan ke Excel
--  Export laporan ke PDF
--  Pemisahan data antar pengguna
+- Login dan autentikasi pengguna
+- Registrasi akun
+- Profil pengguna
+- Ganti password
+- Pencatatan pemasukan
+- Pencatatan pengeluaran
+- Manajemen kategori transaksi
+- Edit transaksi
+- Hapus transaksi
+- Target tabungan
+- Dashboard keuangan
+- Grafik pemasukan dan pengeluaran
+- Grafik pengeluaran berdasarkan kategori
+- Filter laporan berdasarkan tanggal, kategori, dan tipe transaksi
+- Pagination laporan
+- Export laporan ke Excel
+- Export laporan ke PDF
+- Pemisahan data antar pengguna
 
 ## Teknologi
 
 - **Python**
 - **Flask**
-- **SQLite**
+- **PostgreSQL (Neon)**
 - **HTML5**
 - **CSS3**
 - **JavaScript**
@@ -39,11 +39,12 @@
 ## Struktur Project
 
 ```text
-fintrack/
+keuvia/
 │
 ├── app.py
 ├── requirements.txt
 ├── .gitignore
+├── .env
 │
 ├── static/
 │   ├── css/
@@ -52,37 +53,53 @@ fintrack/
 └── templates/
 ```
 
-
 ## Keamanan
 
-FINTRACK menggunakan beberapa mekanisme keamanan dasar, antara lain:
+KEUVIA menggunakan beberapa mekanisme keamanan dasar, antara lain:
 
-Password disimpan menggunakan password hashing.
-Sistem autentikasi menggunakan session.
-Data transaksi dibatasi berdasarkan pengguna yang sedang login.
-Data pengguna tidak dicampur dengan pengguna lainnya.
-Database lokal dan file konfigurasi sensitif tidak disimpan di repository publik.
+- Password disimpan menggunakan password hashing.
+- Sistem autentikasi menggunakan session.
+- Data transaksi dibatasi berdasarkan pengguna yang sedang login.
+- Data pengguna dipisahkan menggunakan user_id.
+- Connection string database dan konfigurasi sensitif disimpan melalui environment variable.
+- File konfigurasi sensitif tidak disimpan di repository publik.
 
 ## Dashboard
 
-Dashboard menyediakan ringkasan kondisi keuangan pengguna, termasuk pemasukan, pengeluaran, saldo, jumlah transaksi, serta visualisasi data keuangan berdasarkan periode dan kategori.
+Dashboard menyediakan ringkasan kondisi keuangan pengguna, termasuk:
+
+- Total pemasukan
+- Total pengeluaran
+- Saldo saat ini
+- Jumlah transaksi
+- Target tabungan
+- Grafik pemasukan dan pengeluaran
+- Visualisasi data keuangan berdasarkan periode
 
 ## Target Tabungan
 
-Pengguna dapat membuat target tabungan dengan menentukan nama target, nominal target, jumlah yang telah terkumpul, dan tanggal target.
+Pengguna dapat membuat target tabungan dengan menentukan:
+
+- Nama target
+- Nominal target
+- Jumlah yang telah terkumpul
+- Tanggal target
 
 ## Laporan
 
 Halaman laporan menyediakan fitur filter berdasarkan:
-Tanggal awal
-Tanggal akhir
-Kategori
-Jenis transaksi
-Hasil laporan dapat diekspor ke format Excel dan PDF.
+
+- Tanggal awal
+- Tanggal akhir
+- Kategori
+- Jenis transaksi
+  Hasil laporan dapat diekspor ke:
+- Excel
+- PDF
 
 ## Menjalankan Secara Lokal
 
-Ikuti langkah berikut untuk menjalankan FINTRACK di komputer Anda.
+Ikuti langkah berikut untuk menjalankan KEUVIA di komputer Anda.
 
 ### 1. Clone Repository
 
@@ -96,29 +113,49 @@ git clone https://github.com/iqbalprakoso/fintrack.git
 cd fintrack
 ```
 
-### 3. Install Dependencies
+### 3. Buat Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+Aktifkan virtual environment:
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### 4. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Jalankan Aplikasi
+### 5. Konfigurasi Environment
+
+Buat file .env dan masukkan konfigurasi database serta secret key aplikasi.
+Contoh:
+
+```text
+DATABASE_URL=your_database_connection_string
+SECRET_KEY=your_secret_key
+```
+
+Jangan membagikan isi .env atau connection string database ke publik.
+
+### 6. Jalankan Aplikasi
 
 ```bash
 python app.py
 ```
 
-### 5. Buka FINTRACK
+### 7. Buka Aplikasi
 
-Setelah aplikasi berhasil dijalankan, buka browser dan akses:
-
-```text
+```bash
 http://127.0.0.1:5000
 ```
 
-👨‍💻 Author
+Author
 Iqbal Prakoso
-
-FINTRACK dibuat sebagai project web application untuk pembelajaran, penggunaan pribadi, dan portfolio development.
-
-⭐ Jika project ini bermanfaat, silakan beri star pada repository.
+KEUVIA dibuat sebagai project web application untuk pembelajaran, penggunaan pribadi, dan portfolio development.
