@@ -104,13 +104,13 @@ Ikuti langkah berikut untuk menjalankan KEUVIA di komputer Anda.
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/iqbalprakoso/fintrack.git
+git clone https://github.com/iqbalprakoso/keuvia.git
 ```
 
 ### 2. Masuk ke Folder Project
 
 ```bash
-cd fintrack
+cd keuvia
 ```
 
 ### 3. Buat Virtual Environment
