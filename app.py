@@ -37,6 +37,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph
 from werkzeug.security import generate_password_hash, check_password_hash
+from io import BytesIO
 
 from datetime import (
     datetime,
@@ -1553,6 +1554,7 @@ def pengaturan():
 def export_excel():
 
     conn = get_db()
+
     data = conn.execute("""
         SELECT
             tanggal,
@@ -1568,6 +1570,7 @@ def export_excel():
     )).fetchall()
 
     conn.close()
+
     df = pd.DataFrame(
         data,
         columns=[
@@ -1577,12 +1580,13 @@ def export_excel():
             "Tipe",
             "Nominal"
         ]
-
     )
 
-    file_name = "catatan_keuangan.xlsx"
+    # Buat file Excel di memory
+    excel_buffer = BytesIO()
+
     with pd.ExcelWriter(
-        file_name,
+        excel_buffer,
         engine="openpyxl"
     ) as writer:
 
@@ -1600,11 +1604,14 @@ def export_excel():
         ws.column_dimensions["D"].width = 15
         ws.column_dimensions["E"].width = 20
 
+    # Kembali ke awal file
+    excel_buffer.seek(0)
+
     return send_file(
-
-        file_name,
-        as_attachment=True
-
+        excel_buffer,
+        as_attachment=True,
+        download_name="catatan_keuangan.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
 
 # ==========================================================
@@ -2356,8 +2363,8 @@ def laporan():
 def export_pdf():
 
     conn = get_db()
-    data = conn.execute("""
 
+    data = conn.execute("""
         SELECT
             tanggal,
             keterangan,
@@ -2367,17 +2374,17 @@ def export_pdf():
         FROM transaksi
         WHERE user_id = %s
         ORDER BY tanggal DESC
-
     """, (
         session["user_id"],
     )).fetchall()
 
     conn.close()
 
+    # Buat PDF di memory
+    pdf_buffer = BytesIO()
+
     pdf = SimpleDocTemplate(
-
-        "laporan_keuangan.pdf"
-
+        pdf_buffer
     )
 
     styles = getSampleStyleSheet()
@@ -2385,82 +2392,58 @@ def export_pdf():
     elements = []
 
     elements.append(
-
         Paragraph(
-
             "Laporan Keuangan KEUVIA",
-
             styles["Heading1"]
-
         )
-
     )
 
     table_data = [
-
         [
-
             "Tanggal",
-
             "Keterangan",
-
             "Kategori",
-
             "Tipe",
-
             "Nominal"
-
         ]
-
     ]
 
     for row in data:
 
         table_data.append([
-
             row["tanggal"],
-
             row["keterangan"],
-
             row["kategori"],
-
             row["tipe"],
-
             f'Rp {row["nominal"]:,}'.replace(",", ".")
-
         ])
 
     table = Table(table_data)
+
     table.setStyle(
-
         TableStyle([
-
-            ("BACKGROUND",(0,0),(-1,0),colors.blue),
-
-            ("TEXTCOLOR",(0,0),(-1,0),colors.white),
-
-            ("GRID",(0,0),(-1,-1),1,colors.grey),
-
-            ("BACKGROUND",(0,1),(-1,-1),colors.beige),
-
-            ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
-
-            ("BOTTOMPADDING",(0,0),(-1,0),10),
-
+            ("BACKGROUND", (0, 0), (-1, 0), colors.blue),
+            ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+            ("GRID", (0, 0), (-1, -1), 1, colors.grey),
+            ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
+            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+            ("BOTTOMPADDING", (0, 0), (-1, 0), 10),
         ])
-
     )
-            
+
     elements.append(table)
 
+    # Bangun PDF ke memory
     pdf.build(elements)
 
+    # Kembali ke awal file
+    pdf_buffer.seek(0)
+
     return send_file(
-
-        "laporan_keuangan.pdf",
-
-        as_attachment=True
-
+        pdf_buffer,
+        as_attachment=True,
+        download_name="laporan_keuangan.pdf",
+        mimetype="application/pdf"
     )
 
 # ==========================================================
