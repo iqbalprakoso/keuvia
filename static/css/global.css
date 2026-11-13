@@ -522,3 +522,144 @@ ul {
     transform: translateY(0);
   }
 }
+
+/* =======================================================
+   RESPONSIVE MOBILE - LAYOUT UTAMA KEUVIA
+======================================================= */
+
+@media (max-width: 768px) {
+  /* WRAPPER */
+  .wrapper {
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  /* SIDEBAR MENJADI BOTTOM NAVIGATION */
+  .sidebar {
+    width: 100%;
+    height: 70px;
+
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+
+    flex-direction: row;
+    justify-content: center;
+
+    border-right: none;
+    border-top: 1px solid #e5e7eb;
+
+    z-index: 1000;
+  }
+
+  /* Sembunyikan logo dan profil sidebar */
+  .sidebar-logo,
+  .sidebar-user {
+    display: none;
+  }
+
+  /* MENU NAVIGASI */
+  .sidebar-menu {
+    width: 100%;
+    padding: 6px 4px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 2px;
+  }
+
+  .sidebar-menu li {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sidebar-menu a {
+    padding: 8px 2px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.2;
+
+    border-radius: 10px;
+  }
+
+  .sidebar-menu a i {
+    width: auto;
+    font-size: 17px;
+  }
+
+  /* MAIN CONTENT */
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+
+    padding: 15px;
+
+    padding-bottom: 90px;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    padding: 18px;
+    margin-bottom: 18px;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .topbar-left h1 {
+    font-size: 25px;
+  }
+
+  .topbar-left p {
+    font-size: 13px;
+  }
+
+  .topbar-right {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  .date-box {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .user-box {
+    padding: 6px 10px;
+  }
+
+  /* CONTAINER */
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  /* FOOTER */
+  .dashboard-footer {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    text-align: center;
+    font-size: 11px;
+  }
+}
