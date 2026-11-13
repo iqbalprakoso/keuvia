@@ -802,3 +802,150 @@ DONUT CHART
   width: 100% !important;
   height: 100% !important;
 }
+
+/* =========================================
+   RESPONSIVE DASHBOARD MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  /* Mencegah elemen melebar keluar layar */
+  .dashboard-row,
+  .dashboard-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .dashboard-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .dashboard-card {
+    padding: 16px;
+  }
+
+  /* HEADER CARD */
+  .card-header {
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .card-header h3 {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .btn-detail {
+    padding: 8px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* TARGET TABUNGAN */
+  .target-card {
+    min-height: auto;
+  }
+
+  .target-body {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .target-body h2 {
+    font-size: 22px;
+    overflow-wrap: anywhere;
+  }
+
+  .target-body p {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  .target-info {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .info-card {
+    min-width: 0;
+    padding: 10px 5px;
+    overflow-wrap: anywhere;
+  }
+
+  .info-card small {
+    font-size: 10px;
+    margin-bottom: 7px;
+  }
+
+  .info-card strong {
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  /* TABEL TRANSAKSI */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modern-table {
+    width: 100%;
+    min-width: 650px;
+    table-layout: auto;
+    border-collapse: collapse;
+  }
+
+  .modern-table th,
+  .modern-table td {
+    padding: 12px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .modern-table td:nth-child(2) {
+    width: auto;
+  }
+
+  .modern-table td:last-child {
+    width: auto;
+  }
+
+  .badge {
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+
+  /* GRAFIK */
+  .chart-wrapper {
+    height: 250px;
+    min-width: 0;
+  }
+
+  .donut-wrapper {
+    height: 280px;
+    min-width: 0;
+  }
+
+  /* KPI */
+  .stat-card {
+    min-width: 0;
+    padding: 16px;
+    gap: 13px;
+  }
+
+  .stat-info {
+    min-width: 0;
+  }
+
+  .stat-info h2 {
+    font-size: 21px;
+    overflow-wrap: anywhere;
+  }
+}

@@ -544,3 +544,232 @@ EXPORT PDF
 .btn-export-pdf:hover {
   background: #b91c1c;
 }
+
+/* ==========================================================
+   RESPONSIVE MOBILE - LAPORAN KEUANGAN
+========================================================== */
+
+@media (max-width: 768px) {
+  /* FILTER CARD */
+  .laporan-filter-card {
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+  }
+
+  .section-title {
+    gap: 9px;
+    margin-bottom: 15px;
+  }
+
+  .section-title h2 {
+    font-size: 19px;
+  }
+
+  /* FORM FILTER */
+  .filter-form {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .filter-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    width: 100%;
+  }
+
+  .filter-row input,
+  .filter-row select {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .filter-button {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .filter-button button,
+  .filter-button a {
+    width: 100%;
+    padding: 11px 8px;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* SUMMARY */
+  .laporan-summary {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .summary-card {
+    width: 100%;
+    min-width: 0;
+    min-height: 90px;
+    padding: 16px;
+    gap: 13px;
+    border-radius: 14px;
+  }
+
+  .summary-card i {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    font-size: 19px;
+    border-radius: 12px;
+  }
+
+  .summary-card > div {
+    min-width: 0;
+  }
+
+  .summary-card small {
+    font-size: 12px;
+  }
+
+  .summary-card h2 {
+    font-size: 19px;
+    overflow-wrap: anywhere;
+  }
+
+  /* GRAFIK */
+  .chart-grid,
+  .laporan-chart-grid {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .laporan-chart-grid .chart-card {
+    width: 100%;
+    min-width: 0;
+    height: 320px;
+    padding: 14px;
+  }
+
+  .laporan-chart-grid .card-header h3 {
+    font-size: 14px;
+  }
+
+  .laporan-chart-grid .chart-wrapper {
+    width: 100%;
+    height: 245px;
+    min-width: 0;
+    position: relative;
+  }
+
+  .laporan-chart-grid canvas {
+    max-width: 100% !important;
+  }
+
+  /* EXPORT BUTTON */
+  .export-buttons {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .btn-export-excel,
+  .btn-export-pdf {
+    width: 100%;
+    padding: 11px 6px;
+    font-size: 12px;
+    gap: 6px;
+  }
+
+  /* TABLE CARD */
+  .dashboard-card {
+    width: 100%;
+    min-width: 0;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .table-card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .table-header {
+    margin-bottom: 14px;
+  }
+
+  .table-header h3 {
+    font-size: 17px;
+  }
+
+  /* TABLE SCROLL */
+  .table-responsive {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modern-table {
+    min-width: 620px;
+  }
+
+  .modern-table th,
+  .modern-table td {
+    padding: 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* PAGINATION */
+  .pagination {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pagination a {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+}
+
+/* ==========================================================
+   HP LAYAR KECIL
+========================================================== */
+
+@media (max-width: 360px) {
+  .laporan-filter-card {
+    padding: 12px;
+  }
+
+  .summary-card {
+    padding: 13px;
+  }
+
+  .summary-card h2 {
+    font-size: 17px;
+  }
+
+  .laporan-chart-grid .chart-card {
+    padding: 10px;
+  }
+
+  .export-buttons {
+    gap: 6px;
+  }
+
+  .btn-export-excel,
+  .btn-export-pdf {
+    font-size: 11px;
+  }
+}
