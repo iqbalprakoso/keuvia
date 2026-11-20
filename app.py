@@ -1545,6 +1545,57 @@ def pengaturan():
     )
 
 
+@app.route("/hapus-seluruh-data", methods=["POST"])
+def hapus_seluruh_data():
+    password = request.form.get("password", "").strip()
+
+    if not password:
+        flash("Password wajib diisi.", "error")
+        return redirect(url_for("pengaturan"))
+
+    conn = get_db()
+
+    try:
+        # Ambil password akun yang sedang login
+        user = conn.execute(
+            "SELECT password FROM users WHERE id = %s",
+            (session["user_id"],)
+        ).fetchone()
+
+        # Verifikasi password
+        if not user or not check_password_hash(user["password"], password):
+            conn.rollback()
+            flash("Password yang Anda masukkan salah.", "error")
+            return redirect(url_for("pengaturan"))
+
+        # Hapus data keuangan milik akun yang sedang login
+        conn.execute(
+            "DELETE FROM transaksi WHERE user_id = %s",
+            (session["user_id"],)
+        )
+
+        conn.execute(
+            "DELETE FROM target_tabungan WHERE user_id = %s",
+            (session["user_id"],)
+        )
+
+        # Simpan kedua penghapusan sekaligus
+        conn.commit()
+
+        flash("Seluruh data keuangan berhasil dihapus.", "success")
+
+    except Exception:
+        conn.rollback()
+        app.logger.exception("Gagal menghapus seluruh data keuangan")
+        flash("Penghapusan data gagal. Silakan coba kembali.", "error")
+
+    finally:
+        conn.close()
+
+    return redirect(url_for("pengaturan"))
+
+
+
 # ==========================================================
 # ROUTE EXPORT EXCEL
 # Mengekspor seluruh transaksi ke file Excel

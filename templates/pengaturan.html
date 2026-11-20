@@ -48,6 +48,27 @@
   </div>
 
   <!-- ================================================= -->
+  <!-- DATA KEUANGAN -->
+  <!-- ================================================= -->
+
+  <div class="setting-card">
+    <div class="setting-icon danger-icon">
+      <i class="fa-solid fa-database"></i>
+    </div>
+
+    <div class="setting-content">
+      <h3>Data Keuangan</h3>
+
+      <p>Hapus seluruh transaksi dan target tabungan dari akun Anda. Akun dan kategori tetap tersimpan.</p>
+
+      <button type="button" class="btn-delete-data" onclick="bukaModalHapus()">
+        <i class="fa-solid fa-trash"></i>
+        Hapus Seluruh Data
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
   <!-- INFORMASI APLIKASI -->
   <!-- ================================================= -->
 
@@ -59,7 +80,7 @@
     <div class="setting-content">
       <h3>Tentang KEUVIA</h3>
 
-      <p>KEUVIA adalah aplikasi pencatatan keuangan berbasis Flask dan SQLite.</p>
+      <p>KEUVIA adalah aplikasi pencatatan keuangan berbasis Flask dan PostgreSQL.</p>
 
       <p class="app-version">Versi 1.0</p>
     </div>
@@ -86,5 +107,51 @@
     </div>
   </div>
 </div>
+
+<!-- ================================================= -->
+<!-- MODAL HAPUS DATA -->
+<!-- ================================================= -->
+
+<div id="modalHapusData" class="modal-hapus-data">
+  <div class="modal-hapus-content">
+    <div class="modal-hapus-icon">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+
+    <h3>Hapus Seluruh Data?</h3>
+
+    <p>Semua transaksi dan target tabungan Anda akan dihapus secara permanen. Akun dan kategori tidak akan terhapus.</p>
+
+    <form method="POST" action="{{ url_for('hapus_seluruh_data') }}">
+      <label for="passwordHapus">Masukkan password akun untuk konfirmasi</label>
+
+      <input type="password" id="passwordHapus" name="password" placeholder="Masukkan password Anda" required autocomplete="current-password" />
+
+      <div class="modal-hapus-actions">
+        <button type="button" class="btn-batal-hapus" onclick="tutupModalHapus()">Batal</button>
+
+        <button type="submit" class="btn-konfirmasi-hapus">Ya, Hapus Data</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function bukaModalHapus() {
+    document.getElementById("modalHapusData").classList.add("active");
+    document.getElementById("passwordHapus").value = "";
+    document.getElementById("passwordHapus").focus();
+  }
+
+  function tutupModalHapus() {
+    document.getElementById("modalHapusData").classList.remove("active");
+  }
+
+  document.getElementById("modalHapusData").addEventListener("click", function (e) {
+    if (e.target === this) {
+      tutupModalHapus();
+    }
+  });
+</script>
 
 {% endblock %}

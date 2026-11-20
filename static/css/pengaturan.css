@@ -246,3 +246,169 @@
 .profile-back .btn-secondary:hover {
   background: #e2e8f0;
 }
+
+/* ==========================================================
+   HAPUS DATA KEUANGAN
+========================================================== */
+
+.danger-icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-delete-data {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 10px;
+  padding: 9px 14px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #fee2e2;
+  color: #dc2626;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-delete-data:hover {
+  background: #fecaca;
+}
+
+/* ==========================================================
+   MODAL HAPUS DATA
+========================================================== */
+
+.modal-hapus-data {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.modal-hapus-data.active {
+  display: flex;
+}
+
+.modal-hapus-content {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 25px;
+  border-radius: 16px;
+
+  background: #ffffff;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+}
+
+.modal-hapus-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 16px;
+  border-radius: 12px;
+
+  background: #fee2e2;
+  color: #dc2626;
+
+  font-size: 22px;
+}
+
+.modal-hapus-content h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  color: #0f172a;
+}
+
+.modal-hapus-content p {
+  margin: 0 0 20px;
+
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.modal-hapus-content label {
+  display: block;
+  margin-bottom: 8px;
+
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.modal-hapus-content input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  outline: none;
+  font-size: 14px;
+}
+
+.modal-hapus-content input:focus {
+  border-color: #2563eb;
+}
+
+.modal-hapus-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.btn-batal-hapus,
+.btn-konfirmasi-hapus {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 9px;
+
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-batal-hapus {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.btn-konfirmasi-hapus {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn-konfirmasi-hapus:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 400px) {
+  .modal-hapus-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-hapus-actions button {
+    width: 100%;
+  }
+}
